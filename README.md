@@ -103,4 +103,7 @@ After get the ***predicted_label*** file for the target program with the help of
 + Tools: We use four tools to help implement the collector, predictor and monitor :
 + Angr: https://github.com/angr/angr
 + DynamoRIO: https://dynamorio.org
++ Genism: http://radimrehurek.com/gensim
++ Intel xed: https://intelxed.github.io/build-manual/
+
 
