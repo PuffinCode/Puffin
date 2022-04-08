@@ -89,27 +89,18 @@ Once we have obtained ***label_program***, ***bb_program***, ***adj_program***, 
 After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. In this section, we will describe how to run the monitor.
 ## run steps
 + Obtain the assembly file ***ass_program*** of the target program by objdump
-+ Run Redsparrow with the following command:
-./redsparrow pid binary sample_freq detect_t phase_get_memory ***predicted_label*** ***ass_program***
++ Run Puffin with the following command:
+./puffin xx  ***predicted_label*** 
    + parameter:
-      + pid: the pid of the target program running on the server
-      + binary: the binary of the target program
-      + sample_freq: sample freq of redsparrow, the way to choose this parameter is discussed in the paper
-      + detect_t: duration of memory state sampling execution, the way to choose this parameter is discussed in the paper
-      + phase_get_memory: this parameter should be set to 0 in order to switch it to monitor
-      + ***predicted_label***: prediction label file output by the predictor
-      + ***ass_program***: assembly file of the target program
+      + xx
+      + xx
 
 + The monitor will output the PC pairs of the detected deadstore. The programmer can optimize the program based on the output results
 
 # Benchmarks and tool links
 + Benchmarks: 
 + SPEC CPU 2017: http://www.spec.org/cpu2017
-+ Memcached: http://memcached.org/
-+ Redis: https://redis.io/
 + Tools: We use four tools to help implement the collector, predictor and monitor :
 + Angr: https://github.com/angr/angr
-+ Intel xed: https://intelxed.github.io/build-manual/
 + DynamoRIO: https://dynamorio.org
-+ Genism: http://radimrehurek.com/gensim
 
