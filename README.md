@@ -88,7 +88,7 @@ Once we have obtained ***label_program***, ***bb_program***, ***adj_program***, 
 # Monitor
 After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. Since this code is not publicly available, it is not provided here. In this section, we will describe how to run the monitor.
 ## run steps
-+ Move ***predicted_label*** file to the installation directory of Puffin
++ Move ***predicted_label*** file to the installation directory of Puffin's monitor
 + Run monitor with the following command: ./bin64/drrun -t puffin_monitor -- target_program
 + The monitor will output the PC pairs of the detected dead stores, silent stores and silent loads. The programmer can optimize the program based on the output results
 
