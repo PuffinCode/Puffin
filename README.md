@@ -50,7 +50,7 @@ We need to collect both static data and dynamic data for predictor. The static d
    + parameter:
       + pid: the pid of the target program running on the server
       + binary: the binary of the target program
-      + sample_freq: sample freq of redsparrow, the way to choose this parameter is discussed in the paper
+      + sample_freq: sample freq of puffin, the way to choose this parameter is discussed in the paper
       + detect_t: duration of memory state sampling execution, the way to choose this parameter is discussed in the paper
       + memory_out: path to the output file
    + output:
