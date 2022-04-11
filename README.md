@@ -1,7 +1,7 @@
 # Introduction of Puffin
 
 # Description
-Puffin is divided into three parts. The first part is the data collector, the second part is the monitor, the third part is the predictor. We will describe in detail how to use these tools to detect inefficiencies in the program.
+Puffin is divided into three parts. The first part is the static and dynamic collector, the second part is the monitor, and the third part is the predictor. We will describe in detail how to use these tools to detect inefficiencies in the program.
 
 # Build
 Static collector: download and install angr on client machines, copy the code in Puffin's collector/static_collector/ to the directory angr-dev/angr-utils/examples/plot_cfg
