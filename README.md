@@ -4,10 +4,10 @@
 Puffin is divided into three parts. The first part is the static and dynamic collector, the second part is the monitor, and the third part is the predictor. We will describe in detail how to use these tools to detect inefficiencies in the program.
 
 # Build
-+ Static collector: download and install angr on client machines, copy the code in Puffin's collector/static_collector/ to the directory angr-dev/angr-utils/examples/plot_cfg
++ Static collector: download and install angr on client machines. Copy the code in Puffin's collector/static_collector/ to the directory angr-dev/angr-utils/examples/plot_cfg
 + Dynamic collector: install intel xed tool on client machines. Compile the monitor with command: g++ -o collector collector.cpp elf_parser.cpp -I path_of_xed/xed-tool/xed-kit/kits/xed-install-base-2020-12-19-lin-x86-64/include -L path_of_xed/xed-tool/xed-kit/kits/xed-install-base-2020-12-19-lin-x86-64/lib -l xed -g -pthread
 + Predictor: installing pytorch on the training server and copy the code in Puffin's predictor to this machine. Install genism with pip. Start the training of the model by executing python train.py
-+ Monitor: download and install DynamoRIO on client machines, copy Puffin's monitor to DynamoRIO/clients and build it with cmake.
++ Monitor: download and install DynamoRIO on client machines. Copy Puffin's monitor to DynamoRIO/clients and build it with cmake.
 
 # Collector
 We need to collect both static data and dynamic data for predictor. The static data of each sample contains 3 parts: CG, CFG, raw data of instructions. The dynamic data of each sample contains memory states. In order to perform model training and accuracy evaluation, we also need to collect labels for each sample. The following describes the scripts we use and the process of generating data.
