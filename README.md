@@ -1,12 +1,13 @@
-# Introduction of RedSparrow
+# Introduction of Puffin
 
 # Description
-Redsparrow is divided into three parts. The first part is the static data collector, the second part is the dynamic data collector and the online monitor, the third part is the predictor. Among them, the dynamic data collector and online monitor are switched by modifying the parameters. We will describe in detail how to use these tools to detect inefficiencies in the program.
+Puffin is divided into three parts. The first part is the data collector, the second part is the monitor, the third part is the predictor. We will describe in detail how to use these tools to detect inefficiencies in the program.
 
 # Build
-Static collector: download and install angr on client machines, copy the code in Redsparrow's monitor_collector/static_collector/ to the directory angr-dev/angr-utils/examples/plot_cfg
-Dynamic collector and monitor: install intel xed tool on client machines. Compile the monitor with command: g++ -o redsparrow redsparrow.cpp elf_parser.cpp -I path_of_xed/xed-tool/xed-kit/kits/xed-install-base-2020-12-19-lin-x86-64/include -L path_of_xed/xed-tool/xed-kit/kits/xed-install-base-2020-12-19-lin-x86-64/lib -l xed -g -pthread
-Predictor: installing pytorch on the training server and copy the code in Redsparrow's predictor to this machine. Install genism with pip. Start the training of the model by executing python train.py
+Static collector: download and install angr on client machines, copy the code in Puffin's collector/static_collector/ to the directory angr-dev/angr-utils/examples/plot_cfg
+Dynamic collector: install intel xed tool on client machines. Compile the monitor with command: g++ -o collector collector.cpp elf_parser.cpp -I path_of_xed/xed-tool/xed-kit/kits/xed-install-base-2020-12-19-lin-x86-64/include -L path_of_xed/xed-tool/xed-kit/kits/xed-install-base-2020-12-19-lin-x86-64/lib -l xed -g -pthread
+Predictor: installing pytorch on the training server and copy the code in Puffin's predictor to this machine. Install genism with pip. Start the training of the model by executing python train.py
+Monitor: download and install DynamoRIO on client machines, copy Puffin's monitor to DynamoRIO/clients and build it with cmake.
 
 # Collector
 We need to collect both static data and dynamic data for predictor. The static data of each sample contains 3 parts: CG, CFG, raw data of instructions. The dynamic data of each sample contains memory states. In order to perform model training and accuracy evaluation, we also need to collect labels for each sample. The following describes the scripts we use and the process of generating data.
@@ -15,7 +16,7 @@ We need to collect both static data and dynamic data for predictor. The static d
 + get_cfg.py: to obtain the CFG of the function and the instructions of each BB through angr
 + cg.py: to obtain the CG for each function with the help of angr
 + check.py: add ground truth labels to all training data
-+ redsparrow: to obtain the memory states for each function 
++ collector: to obtain the memory states for each function 
 + CIDetector: tool to get ground truth labels, implemented based on DynamoRIO. Since this code is not publicly available, it is not provided here
 
 
@@ -44,14 +45,13 @@ We need to collect both static data and dynamic data for predictor. The static d
       + ***target_program_deadstore***: contains all the basic blocks with dead store
       + ***target_program_silentstore***: contains all the basic blocks with silent store
       + ***target_program_silentload***: contains all the basic blocks with silent load
-+ run redsparrow to get memory states: 
-   + ./redsparrow pid binary sample_freq detect_t phase_get_memory memory_out
++ run collector to get memory states: 
+   + ./collector pid binary sample_freq detect_t phase_get_memory memory_out
    + parameter:
       + pid: the pid of the target program running on the server
       + binary: the binary of the target program
       + sample_freq: sample freq of redsparrow, the way to choose this parameter is discussed in the paper
       + detect_t: duration of memory state sampling execution, the way to choose this parameter is discussed in the paper
-      + phase_get_memory: this parameter should be set to 1 in order to switch it to collector
       + memory_out: path to the output file
    + output:
       + ***memory_program*** contains two columns, the first column is the BB that initiated the memory access, and the second column is the target address of the access
@@ -72,7 +72,7 @@ Once we have obtained ***label_program***, ***bb_program***, ***adj_program***, 
 + databox.py: script for data preprocessing
 + loaddata.py: script for batching training data
 + w2v.py: Word2vec model
-+ mymodel_data.py: RedSparrow model
++ mymodel_data.py: Puffin model
 ## run steps
 + create 2 folders to store the trained model: data-model/spy and data-model/w2v
 + train and test the model by running train.py
@@ -86,15 +86,9 @@ Once we have obtained ***label_program***, ***bb_program***, ***adj_program***, 
 + for different training and prediction targets, we will choose the corresponding label files. For example, when we test the prediction accuracy of the model on dead store, we set the path of ***label_program*** to the path of the label file of dead store. At this time, the model uses the label of dead store when training and inferencing.
 
 # Monitor
-After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. In this section, we will describe how to run the monitor.
+After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. Since this code is not publicly available, it is not provided here. In this section, we will describe how to run the monitor.
 ## run steps
-+ Obtain the assembly file ***ass_program*** of the target program by objdump
-+ Run Puffin with the following command:
-./puffin xx  ***predicted_label*** 
-   + parameter:
-      + xx
-      + xx
-
++ Run monitor with the following command: ./bin64/drrun -t puffin_monitor -- target_program
 + The monitor will output the PC pairs of the detected deadstore. The programmer can optimize the program based on the output results
 
 # Benchmarks and tool links
