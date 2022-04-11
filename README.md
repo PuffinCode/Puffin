@@ -50,7 +50,7 @@ We need to collect both static data and dynamic data for predictor. The static d
    + parameter:
       + pid: the pid of the target program running on the server
       + binary: the binary of the target program
-      + sample_freq: sample freq of puffin, the way to choose this parameter is discussed in the paper
+      + sample_freq: sample freq of Puffin, the way to choose this parameter is discussed in the paper
       + detect_t: duration of memory state sampling execution, the way to choose this parameter is discussed in the paper
       + memory_out: path to the output file
    + output:
@@ -88,8 +88,9 @@ Once we have obtained ***label_program***, ***bb_program***, ***adj_program***, 
 # Monitor
 After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. Since this code is not publicly available, it is not provided here. In this section, we will describe how to run the monitor.
 ## run steps
++ Move ***predicted_label*** file to the installation directory of Puffin
 + Run monitor with the following command: ./bin64/drrun -t puffin_monitor -- target_program
-+ The monitor will output the PC pairs of the detected deadstore. The programmer can optimize the program based on the output results
++ The monitor will output the PC pairs of the detected dead stores, silent stores and silent loads. The programmer can optimize the program based on the output results
 
 # Benchmarks and tool links
 + Benchmarks: 
