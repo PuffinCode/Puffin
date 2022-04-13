@@ -1,4 +1,10 @@
-# Introduction of Puffin
+# Hardware
+All the hardware used in this paper is the corporate resources of TikTok Inc. According to the corporate policy, there is no way to vpn-access the hardware resources from outside at this moment. But, we would like to give the detailed machine architectures and configurations as below.
++ We have used two types of machines in our experiments and their detailed descriptions are shown below:
+   + Client machine: Intel Xeon CPU 8163 2.50GHz with 512GB RAM, running Linux kernel 5.0. 
+   + Central server: Accelerator is 8 Nvidia Tesla V100 GPU cards of the Volta architecture, each of which is with 5120 streaming cores, 640 tensor cores and 32GB memory capacity. CUDA version is 11.0 and pytorch version is 1.6.0. Host is Intel Xeon CPU 8163 2.50GHz with 512GB RAM, running Linux kernel 5.0. 
+   + The central server is connected with the client machines through 100Gb NIC.
+
 
 # Description
 Puffin is divided into three parts. The first part is the static and dynamic collector, the second part is the monitor, and the third part is the predictor. We will describe in detail how to use these tools to detect inefficiencies in the program.
