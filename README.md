@@ -99,6 +99,7 @@ Insert the monitor's calling instructions during the compilation of the target p
 We implemented CIDetector based on DynamoRIO strictly according to the state-of-the-art paper mentioned in our work. After testing, our experimental results and the overhead of the tool are consistent with the state-of-the-art paper.
 ## run steps
 Run the following command at the DynamoRIO/build directory: bin64/drrun -t CIDetector -- target_program
+
 CIDetector will output all inefficiencies detected in the target program
 
 
