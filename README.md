@@ -7,7 +7,7 @@ We have used two types of machines in our experiments and their detailed descrip
 + The central server is connected with the client machines through 100Gb NIC.
 
 # Software and Code
-The code consists of three pieces: collector, predictor and monitor. All these codes is partially running in the production at TikTok Inc. According to the corporate security policy, there is no way to open-source the code at this moment. But, we would like to describe some basics of the code structures and the instructions to run. 
+The code is divided into four pieces, three of which are the predictor, collector and monitor. The fourth  is our CIDetector implementation that provides the ground truth labels when training the model. The software is running in the production at TikTok Inc. According to the corporate security policy, there is no way to open-source the code at this moment. But, we would like to describe some basics of the code structures and the instructions to run. 
 
 # Collector
 We need to collect both static data and dynamic data for predictor. The static data of each sample contains 3 parts: CG, CFG, raw data of instructions. The dynamic data of each sample contains memory states. In order to perform model training and accuracy evaluation, we also need to collect labels for each sample. The following describes the scripts we use and the process of generating data.
@@ -94,6 +94,13 @@ After get the ***predicted_label*** file for the target program with the help of
 + printers.cpp: output the monitoring results
 ## run steps
 Insert the monitor's calling instructions during the compilation of the target program. During the running of the target program, the monitor monitors the instructions of the specified function
+
+# CIDetector
+We implemented CIDetector based on DynamoRIO strictly according to the state-of-the-art paper mentioned in our work. After testing, our experimental results and the overhead of the tool are consistent with the state-of-the-art paper.
+## run steps
+CIDetector can be run with the following command: drrun -t CIDetector -- target_program
+  
+
 
 # Benchmarks and tool links
 + Benchmarks: 
