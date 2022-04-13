@@ -86,18 +86,9 @@ Once we have obtained ***label_program***, ***bb_program***, ***adj_program***, 
 + for different training and prediction targets, we will choose the corresponding label files. For example, when we test the prediction accuracy of the model on dead store, we set the path of ***label_program*** to the path of the label file of dead store. At this time, the model uses the label of dead store when training and inferencing.
 
 # Monitor
-After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. Since this code is not publicly available, it is not provided here. In this section, we will describe how to run the monitor.
+After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. The monitor will output the PC pairs of the detected dead stores, silent stores and silent loads. The programmer can optimize the program based on the output results
 ## scripts
-+ puffin.cpp: initialize the monitor
-+ analysis_tool.cpp: obtain monitoring targets based on the ***predicted_label***
-+ instrument.h: instrumentation
-+ shadow_memory.cpp: record information of memory access commands
-+ redundancy_data.cpp: statistic monitoring results
-+ printers.cpp: output the monitoring results
-## run steps
-+ Move ***predicted_label*** file to the installation directory of Puffin's monitor
-+ Run monitor with the following command: ./bin64/drrun -t puffin_monitor -- target_program
-+ The monitor will output the PC pairs of the detected dead stores, silent stores and silent loads. The programmer can optimize the program based on the output results
+The code of the monitor consists of two files, instrumen.h and instrument.cpp. They are responsible for instrumenting the memory access instructions for the specified function of the target program. These two files are the compiler's pass.
 
 # Benchmarks and tool links
 + Benchmarks: 
