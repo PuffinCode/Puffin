@@ -1,13 +1,13 @@
 # Hardware
 All the hardware used in this paper is the corporate resources of TikTok Inc. According to the corporate policy, there is no way to vpn-access the hardware resources from outside at this moment. But, we would like to give the detailed machine architectures and configurations as below.
-+ We have used two types of machines in our experiments and their detailed descriptions are shown below:
-   + Client machine: Intel Xeon CPU 8163 2.50GHz with 512GB RAM, running Linux kernel 5.0. 
-   + Central server: Accelerator is 8 Nvidia Tesla V100 GPU cards of the Volta architecture, each of which is with 5120 streaming cores, 640 tensor cores and 32GB memory capacity. CUDA version is 11.0 and pytorch version is 1.6.0. Host is Intel Xeon CPU 8163 2.50GHz with 512GB RAM, running Linux kernel 5.0. 
-   + The central server is connected with the client machines through 100Gb NIC.
+We have used two types of machines in our experiments and their detailed descriptions are shown below:
++ Client machine: Intel Xeon CPU 8163 2.50GHz with 512GB RAM, running Linux kernel 5.0. 
++ Central server: Accelerator is 8 Nvidia Tesla V100 GPU cards of the Volta architecture, each of which is with 5120 streaming cores, 640 tensor cores and 32GB memory capacity. CUDA version is 11.0 and pytorch version is 1.6.0. Host is Intel Xeon CPU 8163 2.50GHz with 512GB RAM, running Linux kernel 5.0. 
++ The central server is connected with the client machines through 100Gb NIC.
 
+# Software and Code
+The code is divided into four pieces, three of which are the predictor, collector and monitor. The fourth is our CIDetector implementation that provides the ground truth labels when training the model. All these codes is partially running in the production at TikTok Inc. According to the corporate security policy, there is no way to open-source the code at this moment. But, we would like to describe some basics of the code structures and the instructions to run.
 
-# Description
-Puffin is divided into three parts. The first part is the static and dynamic collector, the second part is the monitor, and the third part is the predictor. We will describe in detail how to use these tools to detect inefficiencies in the program.
 
 # Build
 + Static collector: download and install angr on client machines. Copy the code in Puffin's collector/static_collector/ to the directory angr-dev/angr-utils/examples/plot_cfg
