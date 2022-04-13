@@ -6,7 +6,7 @@ We have used two types of machines in our experiments and their detailed descrip
 + The central server is connected with the client machines through 100Gb NIC.
 
 # Software and Code
-The code is divided into four pieces, three of which are the predictor, collector and monitor. The fourth is our CIDetector implementation that provides the ground truth labels when training the model. All these codes is partially running in the production at TikTok Inc. According to the corporate security policy, there is no way to open-source the code at this moment. But, we would like to describe some basics of the code structures and the instructions to run. 
+The code consists of three pieces: collector, predictor and monitor. All these codes is partially running in the production at TikTok Inc. According to the corporate security policy, there is no way to open-source the code at this moment. But, we would like to describe some basics of the code structures and the instructions to run. 
 
 # Collector
 We need to collect both static data and dynamic data for predictor. The static data of each sample contains 3 parts: CG, CFG, raw data of instructions. The dynamic data of each sample contains memory states. In order to perform model training and accuracy evaluation, we also need to collect labels for each sample. The following describes the scripts we use and the process of generating data.
@@ -86,6 +86,13 @@ Once we have obtained ***label_program***, ***bb_program***, ***adj_program***, 
 
 # Monitor
 After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. Since this code is not publicly available, it is not provided here. In this section, we will describe how to run the monitor.
+## scripts
++ puffin.cpp: initialize the monitor
++ analysis_tool.cpp: obtain monitoring targets based on the ***predicted_label***
++ instrument.h: instrumentation
++ shadow_memory.cpp: record information of memory access commands
++ redundancy_data.cpp: statistic monitoring results
++ printers.cpp: output the monitoring results
 ## run steps
 + Move ***predicted_label*** file to the installation directory of Puffin's monitor
 + Run monitor with the following command: ./bin64/drrun -t puffin_monitor -- target_program
