@@ -86,14 +86,16 @@ Once we have obtained ***label_program***, ***bb_program***, ***adj_program***, 
 + for different training and prediction targets, we will choose the corresponding label files. For example, when we test the prediction accuracy of the model on dead store, we set the path of ***label_program*** to the path of the label file of dead store. At this time, the model uses the label of dead store when training and inferencing.
 
 # Monitor
-After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. The monitor will output the PC pairs of the detected dead stores, silent stores and silent loads. The programmer can optimize the program based on the output results
-## scripts
+After get the ***predicted_label*** file for the target program with the help of predictor, we can start performing online monitoring. The monitor will output the PC pairs of the detected dead stores, silent stores and silent loads. The programmer can optimize the program based on the output results.
+## files
 + instrumen.h and instrument.cpp: instrumenting during the compilation of the target program. These two files are the compiler's pass
 + shadow_memory.cpp: record information of memory access commands
 + redundancy_data.cpp: statistic monitoring results
 + printers.cpp: output the monitoring results
 ## run steps
-Insert the monitor's calling instructions during the compilation of the target program. During the running of the target program, the monitor monitors the instructions of the specified function
+We add instrument.h and instrument.cpp into LLVM as a pass to instrument every memory access instruction for a target function for a binary. Then we link this binary with our developed library for checking memory inefficiencies. The libary is built of shadow_memory.cpp, redundancy_data.cpp and printers.cpp. So the running steps are:
+First, we rebuild the target binary with the modified LLVM and link the developed library.
+Second, we run the binary to monitor the memory inefficiens.
 
 # CIDetector
 We implemented CIDetector based on DynamoRIO strictly according to the state-of-the-art paper mentioned in our work. After testing, our experimental results and the overhead of the tool are consistent with the state-of-the-art paper.
